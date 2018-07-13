@@ -1,6 +1,3 @@
-from config import config
-
-
 def sma(time_series, period):
     s_len = len(time_series)
     result = []
@@ -29,10 +26,10 @@ def ema(time_series, period):
     multiplier = 2 / float(1 + period)
     ema.append(sma)
 
-    #EMA(current) = ( (Price(current) - EMA(prev) ) x Multiplier) + EMA(prev)
-    ema.append(( (time_series[period] - sma) * multiplier) + sma)
+    # EMA(current) = ( (Price(current) - EMA(prev) ) x Multiplier) + EMA(prev)
+    ema.append(((time_series[period] - sma) * multiplier) + sma)
 
-    #now calculate the rest of the values
+    # now calculate the rest of the values
     for i in time_series[period + 1:]:
         tmp = ((i - ema[j]) * multiplier) + ema[j]
         j = j + 1

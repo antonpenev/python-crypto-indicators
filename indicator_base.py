@@ -1,4 +1,4 @@
-from util.candle_builder import CandleBuilder
+from candle_builder import CandleBuilder
 
 
 class IndicatorBase(object):
@@ -19,10 +19,10 @@ class IndicatorBase(object):
     def has_enough_data(self):
         raise Exception('has_enough_data not implemented')
 
-    def get_value(self, idx = None):
+    def get_value(self, idx=None):
         raise Exception('get_value not implemented')
 
     def export_data(self):
-        return {'name' : self.__class__.__name__,
-                'params' : self.params,
-                'data' : self.values}
+        return {'name': self.__class__.__name__,
+                'params': self.params,
+                'data': self.values}

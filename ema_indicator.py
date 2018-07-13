@@ -1,4 +1,4 @@
-from core.indicators.indicator_base import IndicatorBase
+from indicator_base import IndicatorBase
 
 
 class EmaIndicator(IndicatorBase):
@@ -27,7 +27,8 @@ class EmaIndicator(IndicatorBase):
         if len(self.raw_vals) == self.period:
             self.values.append(sum(self.raw_vals) / self.period)
         else:
-            self.values.append(self.get_potential_value(self.values, value, self.period))
+            self.values.append(self.get_potential_value(
+                self.values, value, self.period))
             self.velocity_vals.append(self.values[-1] - self.values[-2])
 
     def get_last_value(self):
@@ -36,14 +37,14 @@ class EmaIndicator(IndicatorBase):
     def has_enough_data(self):
         return len(self.values) > 0
 
-    def get_value(self, idx = None):
+    def get_value(self, idx=None):
         if idx is None:
             return self.values[-1]
         if len(self.values) == 0:
             return -1000
         return self.values[idx - self.period]
 
-    def get_ema_velocity_val(self, idx = None):
+    def get_ema_velocity_val(self, idx=None):
         if idx is None:
             return self.velocity_vals[-1]
         return self.velocity_vals[(len(self.velocity_vals) - self.period - 1)]
@@ -52,4 +53,4 @@ class EmaIndicator(IndicatorBase):
 class VolPriceEmaIndicator(EmaIndicator):
     def update(self, candle):
         val = candle['close'] * candle['volume']
-        super().update({'vol*price' : val, 'open_time':candle['open_time']})
+        super().update({'vol*price': val, 'open_time': candle['open_time']})

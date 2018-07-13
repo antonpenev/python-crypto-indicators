@@ -1,9 +1,10 @@
 import talib
 import numpy as np
-from core.indicators.indicator_base import IndicatorBase
+from indicator_base import IndicatorBase
+
 
 class RsiIndicator(IndicatorBase):
-    def __init__(self, processor, indicator_args_dict):
+    def __init__(self, indicator_args_dict):
         super().__init__(indicator_args_dict)
 
         self.period = indicator_args_dict["period"]

@@ -1,6 +1,7 @@
 import talib
 import numpy as np
-from core.indicators.indicator_base import IndicatorBase
+from indicator_base import IndicatorBase
+
 
 class CCIData(object):
     def __init__(self):
@@ -18,6 +19,7 @@ class CCIData(object):
 
     def get_last_data(self, period):
         return self.high[-period:], self.low[-period:], self.close[-period:]
+
 
 class CCIIndicator(IndicatorBase):
     def __init__(self, processor, indicator_args_dict):
@@ -51,7 +53,8 @@ class CCIIndicator(IndicatorBase):
         high_nparr = np.array(high)
         low_nparr = np.array(low)
         close_nparr = np.array(close)
-        res = talib.CCI(high=high_nparr, low=low_nparr, close=close_nparr, timeperiod = self.timeperiod)
+        res = talib.CCI(high=high_nparr, low=low_nparr,
+                        close=close_nparr, timeperiod=self.timeperiod)
         return res.item(-1)
 
     def has_enough_data(self):

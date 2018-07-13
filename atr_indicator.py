@@ -1,6 +1,7 @@
 import talib
 import numpy as np
-from core.indicators.indicator_base import IndicatorBase
+from indicator_base import IndicatorBase
+
 
 class ATRData(object):
     def __init__(self):
@@ -18,6 +19,7 @@ class ATRData(object):
 
     def get_last_data(self, period, precision):
         return self.high[-period - precision:], self.low[-period - precision:], self.close[-period - precision:]
+
 
 class ATRIndicator(IndicatorBase):
     def __init__(self, processor, indicator_args_dict):
@@ -42,7 +44,8 @@ class ATRIndicator(IndicatorBase):
         if self.atr_data.length() < self.timeperiod + self.precision:
             return 50
 
-        high, low, close = self.atr_data.get_last_data(self.timeperiod, self.precision)
+        high, low, close = self.atr_data.get_last_data(
+            self.timeperiod, self.precision)
         if new_candle is not None:
             high.append(new_candle['high'])
             low.append(new_candle['low'])
@@ -50,7 +53,8 @@ class ATRIndicator(IndicatorBase):
         high_nparr = np.array(high)
         low_nparr = np.array(low)
         close_nparr = np.array(close)
-        res = talib.ATR(high=high_nparr, low=low_nparr, close=close_nparr, timeperiod = self.timeperiod)
+        res = talib.ATR(high=high_nparr, low=low_nparr,
+                        close=close_nparr, timeperiod=self.timeperiod)
         return res.item(-1)
 
     def has_enough_data(self):
